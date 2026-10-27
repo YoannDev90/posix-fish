@@ -123,7 +123,8 @@ else
     printf 'FAIL %s (%s)\n' stdin (string escape -- "$stdinout")
 end
 
-set -l script /tmp/opencode/posix-fish-test-$fish_pid.sh
+# mktemp: /tmp existe partout (contrairement a un chemin en dur de sandbox)
+set -l script (mktemp /tmp/posix-fish-test.XXXXXX)
 printf 'echo "script $1 $2"\n' >$script
 set -l fileout (sh $script one two | string collect)
 if test "$fileout" = 'script one two'
